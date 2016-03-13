@@ -1,0 +1,19 @@
+{
+  "name": "mz",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "caibin",
+  "license": "MIT",
+  "devDependencies": {
+    "request": "^2.69.0",
+    "express": "^4.13.4"
+  },
+  "dependencies": {
+    "body": "^5.1.0",
+    "body-parser": "^1.15.0"
+  }
+}
