@@ -39,13 +39,31 @@ app.get('/image_url', function(req, res, next) {
 })
 
 function downloadImage(urls, callback) {
-	var prefix = './downloads/aprilhwong_'
-	urls.forEach(function(item, index, arr) {
-		(function(item, index) {
-			var filename = prefix + index + '.jpg'
-			request(item).pipe(fs.createWriteStream(filename)).on('close', function() {
-				callback && callback(filename)
+	
+	if(fs.exists('./downloads', function(isExist) {
+		if(!isExist) {
+			fs.mkdir('./downloads', function(err) {
+				if(!err) {
+					doDownload();
+				} else {
+					console.log(e);
+				}
 			})
-		})(item, index)
-	})
+		}else {
+			doDownload();
+		}
+	}))
+
+	
+	function doDownload() {
+		var prefix = './downloads/aprilhwong_'
+		urls.forEach(function(item, index, arr) {
+			(function(item, index) {
+				var filename = prefix + index + '.jpg'
+				request(item).pipe(fs.createWriteStream(filename)).on('close', function() {
+					callback && callback(filename)
+				})
+			})(item, index)
+		})
+	}
 }
