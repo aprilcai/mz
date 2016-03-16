@@ -1,0 +1,27 @@
+{
+	"manifest_version": 2,
+	"version": "1.0.0",
+	"author": "caibin",
+	"name": "mz",
+	"description": "A extension to download photos from potho.weibo.com",
+	"icons": {
+		"16": "./images/download_16.png",
+		"48": "./images/download_48.png",
+		"128": "./images/download_128.png"
+	},
+
+	"browser_action": {
+		"default_icon": "./images/download_16.png",
+		"default_title": "mz",
+		"default_popup": "popup.html"
+	},
+
+	"permissions": [
+		"http://photo.weibo.com/",
+		"https://photo.weibo.com/"
+	],
+
+	"content_security_policy": "script-src 'self'; object-src 'self'"
+
+}
+

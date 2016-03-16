@@ -14,6 +14,10 @@ var fs = require('fs')
 
 var path = require('path')
 
+var username = ''
+
+var downloadPath = process.env.HOME + '/images/'
+
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
 
@@ -27,6 +31,7 @@ app.get('/image_url', function(req, res, next) {
 	if(query) {
 		try{
 			var imageUrls = query.urls && query.urls.split(';')
+			username = query.username || 'downloads'
 			downloadImage(imageUrls, function(filename) {
 				console.log(filename + ' download finished')
 			})
@@ -39,27 +44,25 @@ app.get('/image_url', function(req, res, next) {
 })
 
 function downloadImage(urls, callback) {
-	
-	if(fs.exists('./downloads', function(isExist) {
-		if(!isExist) {
-			fs.mkdir('./downloads', function(err) {
+	if(fs.exists(downloadPath + username, function(exist) {
+		if(!exist) {
+			fs.mkdir(downloadPath + username, function(err) {
 				if(!err) {
-					doDownload();
+					doDownload()
 				} else {
-					console.log(e);
+					console.log(err)
 				}
 			})
-		}else {
-			doDownload();
+		} else {
+			doDownload()
 		}
 	}))
 
-	
 	function doDownload() {
-		var prefix = './downloads/aprilhwong_'
+		var prefix = downloadPath + username + '/' + username + '_'
 		urls.forEach(function(item, index, arr) {
 			(function(item, index) {
-				var filename = prefix + index + '.jpg'
+				var filename = prefix + path.basename(item)
 				request(item).pipe(fs.createWriteStream(filename)).on('close', function() {
 					callback && callback(filename)
 				})
